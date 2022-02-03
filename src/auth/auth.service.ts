@@ -55,14 +55,11 @@ export class AuthService {
       if (!user) {
         throw new HttpException({ message: 'User not found' }, 401);
       }
-      // const pwd = await this.hashPassword(password);
 
-      // console.log(pwd);
-      // console.log(user.password);
-      // let isVerified = await bcrypt.compare(pwd, user.password);
-      // if (!isVerified) {
-      //   throw new HttpException({ message: 'Invalid login details' }, 401);
-      // }
+      let isVerified = await bcrypt.compare(password, user.password);
+      if (!isVerified) {
+        throw new HttpException({ message: 'Invalid login details' }, 401);
+      }
 
       return Promise.resolve(user);
     } catch (e) {
